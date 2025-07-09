@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Formulario from "./components/Formulario";
 import ListaRegistros from "./components/ListaRegistros";
-
+import './App.css';
 function App() {
   const [registros, setRegistros] = useState([]);
   const [registroActual, setRegistroActual] = useState(null);

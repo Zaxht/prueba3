@@ -9,6 +9,8 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
     fecha: ""
   });
 
+  const [error, setError] = useState("");
+
   useEffect(() => {
     if (modoEdicion && registroActual) {
       setFormData(registroActual);
@@ -26,9 +28,11 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.nombre || !formData.tipo || !formData.fecha) {
-      alert("Completa los campos requeridos.");
+      setError("Por favor completa los campos obligatorios.");
       return;
     }
+
+    setError("");
     onGuardar(formData);
     setFormData({
       nombre: "",
@@ -40,17 +44,35 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ marginBottom: "2rem" }}>
       <h2>{modoEdicion ? "Editar registro" : "Nuevo registro"}</h2>
 
-      <label>Nombre (texto):</label>
-      <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <label>Nombre (texto): *</label>
+      <input
+        type="text"
+        name="nombre"
+        value={formData.nombre}
+        onChange={handleChange}
+        required
+      />
 
       <label>Participantes (número):</label>
-      <input type="number" name="participantes" value={formData.participantes} onChange={handleChange} />
+      <input
+        type="number"
+        name="participantes"
+        value={formData.participantes}
+        onChange={handleChange}
+      />
 
-      <label>Tipo (select):</label>
-      <select name="tipo" value={formData.tipo} onChange={handleChange} required>
+      <label>Tipo (select): *</label>
+      <select
+        name="tipo"
+        value={formData.tipo}
+        onChange={handleChange}
+        required
+      >
         <option value="">-- Selecciona una opción --</option>
         <option value="evento">Evento</option>
         <option value="taller">Taller</option>
@@ -58,12 +80,24 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
       </select>
 
       <label>Descripción (textarea):</label>
-      <textarea name="descripcion" value={formData.descripcion} onChange={handleChange} />
+      <textarea
+        name="descripcion"
+        value={formData.descripcion}
+        onChange={handleChange}
+      />
 
-      <label>Fecha (date):</label>
-      <input type="date" name="fecha" value={formData.fecha} onChange={handleChange} required />
+      <label>Fecha (date): *</label>
+      <input
+        type="date"
+        name="fecha"
+        value={formData.fecha}
+        onChange={handleChange}
+        required
+      />
 
-      <button type="submit">{modoEdicion ? "Guardar cambios" : "Crear registro"}</button>
+      <button type="submit">
+        {modoEdicion ? "Guardar cambios" : "Crear registro"}
+      </button>
     </form>
   );
 };
