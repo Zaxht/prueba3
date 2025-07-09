@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Formulario from "./components/Formulario";
 import ListaRegistros from "./components/ListaRegistros";
-import './App.css';
+import './App.css'; 
+
 function App() {
   const [registros, setRegistros] = useState([]);
   const [registroActual, setRegistroActual] = useState(null);
@@ -9,14 +10,27 @@ function App() {
 
   useEffect(() => {
     const datosGuardados = localStorage.getItem("registros");
+      console.log("🔁 Leyendo localStorage:", datosGuardados);
     if (datosGuardados) {
-      setRegistros(JSON.parse(datosGuardados));
+      try {
+        const parsed = JSON.parse(datosGuardados);
+        if (Array.isArray(parsed)) {
+          setRegistros(parsed);
+        } else {
+          console.warn("Se esperaba un array en localStorage, pero no lo es.");
+        }
+      } catch (e) {
+        console.error("Error al parsear datos desde localStorage", e);
+      }
     }
   }, []);
 
-  useEffect(() => {
+useEffect(() => {
+  // Solo guarda si registros NO es vacío
+  if (registros.length > 0) {
     localStorage.setItem("registros", JSON.stringify(registros));
-  }, [registros]);
+  }
+}, [registros]);
 
   const guardarRegistro = (nuevo) => {
     if (modoEdicion) {
@@ -40,10 +54,11 @@ function App() {
     const nuevos = registros.filter((_, i) => i !== index);
     setRegistros(nuevos);
   };
+ console.log("📦 Estado registros al render:", registros);
 
   return (
-    <div>
-      <h1>Gestión Comunitaria</h1>
+    <div className="container">
+      <h1>Gestión Organización Comunitaria</h1>
       <Formulario
         onGuardar={guardarRegistro}
         registroActual={registroActual}

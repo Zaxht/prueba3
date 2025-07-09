@@ -49,7 +49,7 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <label>Nombre (texto): *</label>
+      <label>Nombre: *</label>
       <input
         type="text"
         name="nombre"
@@ -58,7 +58,7 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
         required
       />
 
-      <label>Participantes (número):</label>
+      <label>Participantes:</label>
       <input
         type="number"
         name="participantes"
@@ -66,7 +66,7 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
         onChange={handleChange}
       />
 
-      <label>Tipo (select): *</label>
+      <label>Tipo: *</label>
       <select
         name="tipo"
         value={formData.tipo}
@@ -79,14 +79,14 @@ const Formulario = ({ onGuardar, registroActual, modoEdicion }) => {
         <option value="donación">Donación</option>
       </select>
 
-      <label>Descripción (textarea):</label>
+      <label>Descripción:</label>
       <textarea
         name="descripcion"
         value={formData.descripcion}
         onChange={handleChange}
       />
 
-      <label>Fecha (date): *</label>
+      <label>Fecha: *</label>
       <input
         type="date"
         name="fecha"
